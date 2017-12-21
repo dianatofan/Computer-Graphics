@@ -10,10 +10,15 @@ Student number: s172393
 ### Exercises
 
 **Worksheet 1: Getting started with WebGL**
+
 **Worksheet 2: Input devices and interaction**
+
 **Worksheet 3: Projections (virtual camera) and transformations**
+
 **Worksheet 4: Local illumination – Gouraud and Phong shading**
+
 **Worksheet 5: Rendering a triangle mesh**
+
 **Worksheet 6: Texture mapping**
 
 ### Project
