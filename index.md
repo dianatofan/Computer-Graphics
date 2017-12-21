@@ -1,6 +1,6 @@
 ## Computer Graphics 
 
-This website contains the weekly exercises and final project. 
+This website contains the weekly exercises and final project for the course **02561 Computer Graphics**. 
 
 During the semester I worked in a team with 2 other members on the weekly exercises, but I did the final project individually.
 
