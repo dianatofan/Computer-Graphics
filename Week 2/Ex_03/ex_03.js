@@ -9,38 +9,26 @@ window.onload = function main() {
     return;
   }
 
-
-
   index = 0;
-
   selected = 0;
-
   triCounter = 0;
-
-  cirCounter = 0;
-
-  cirPoints = 100;
-
-
 
   indexArrayPoints = [];
   indexArrayTri = [];
   indexArrayCir = [];
   verticesPoints = [];
   verticesTri = [];
-  verticesCir = [];
   colors = [];
   chosenColor = [0, 0, 0, 1]
 
 
   canvas.addEventListener("click", function() {
 
-    if (selected == 0) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
+    var correction = event.target.getBoundingClientRect();
+    var t = vec2(-1 + 2 * (event.clientX - correction.left) / canvas.width, -1 + 2 * (canvas.height - event.clientY + correction.top) / canvas.height);
 
-      gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-      var correction = event.target.getBoundingClientRect();
-      var t = vec2(-1 + 2 * (event.clientX - correction.left) / canvas.width, -1 + 2 * (canvas.height - event.clientY + correction.top) / canvas.height);
-
+    if (selected == 0) { // draw points
       verticesPoints.push(t);
       gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec2'] * index, flatten(t));
       gl.bindBuffer(gl.ARRAY_BUFFER, cBufferId);
@@ -49,12 +37,7 @@ window.onload = function main() {
       index++;
 
 
-    } else if (selected == 1) {
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-      var correction = event.target.getBoundingClientRect();
-      var t = vec2(-1 + 2 * (event.clientX - correction.left) / canvas.width, -1 + 2 * (canvas.height - event.clientY + correction.top) / canvas.height);
-
+    } else if (selected == 1) { // draw triangles
       verticesTri.push(t);
       gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec2'] * index, flatten(t));
       gl.bindBuffer(gl.ARRAY_BUFFER, cBufferId);
@@ -74,66 +57,8 @@ window.onload = function main() {
 
       index++;
 
-    } else if (selected == 2) {
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-      var correction = event.target.getBoundingClientRect();
-      var t = vec2(-1 + 2 * (event.clientX - correction.left) / canvas.width, -1 + 2 * (canvas.height - event.clientY + correction.top) / canvas.height);
-
-      verticesCir.push(t);
-      gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec2'] * index, flatten(t));
-      gl.bindBuffer(gl.ARRAY_BUFFER, cBufferId);
-      gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec4'] * index, flatten(chosenColor));
-
-      if (cirCounter == 1) {
-
-        indexArrayCir.push(indexArrayPoints[indexArrayPoints.length - 1]);
-
-        cirCounter = 0;
-        centerPoint = verticesCir[verticesCir.length - 2];
-        console.log(centerPoint[0], centerPoint[1]);
-        console.log(t[0], t[1]);
-        console.log((t[0] - centerPoint[0]) ^ 2, (t[1] - centerPoint[1]) ^ 2);
-
-        length = Math.sqrt((t[0] - centerPoint[0]) * (t[0] - centerPoint[0]) + (t[1] - centerPoint[1]) * (t[1] - centerPoint[1]));
-        console.log(length);
-
-        for (var i = 0; i >= 100; i++) {
-
-          var pointX = length * Math.cos(theta) + centerPoint[0];
-          var pointY = length * Math.sin(theta) + centerPoint[1];
-
-          // verticesCir.push(vec2(length*Math.cos(theta)+centerPoint[0],length*Math.sin(theta)+centerPoint[1]));
-          theta += 0.1;
-
-          gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-          var t = vec2(pointX, pointY);
-
-          verticesCir.push(t);
-          gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec2'] * index, flatten(t));
-          gl.bindBuffer(gl.ARRAY_BUFFER, cBufferId);
-          gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec4'] * index, flatten(chosenColor));
-
-          index++;
-
-
-        }
-
-        indexArrayPoints.pop();
-
-      } else {
-
-        indexArrayPoints.push(index);
-        cirCounter++;
-
-      }
-      index++;
     }
-
   });
-
-
-
 
   var program = initShaders(gl, "vertex-shader", "fragment-shader");
   gl.useProgram(program);
@@ -161,9 +86,7 @@ window.onload = function main() {
   gl.bufferSubData(gl.ARRAY_BUFFER, index * sizeof["vec2"], flatten(verticesPoints));
 
 
-
   // Associate out shader variables with our data buffer
-
   var vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
@@ -173,7 +96,6 @@ window.onload = function main() {
 }
 
 function render() {
-
   gl.clear(gl.COLOR_BUFFER_BIT);
   if (index > 0) {
     for (var i = 0; i < index; i++) {
@@ -184,12 +106,8 @@ function render() {
       } else if (indexArrayCir.includes(i)) {
         gl.drawArrays(gl.TRIANGLE_FAN, i, 101);
       }
-
     }
-
   }
-
-
   window.requestAnimFrame(render);
 }
 

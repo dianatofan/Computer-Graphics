@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><Exercise 1 Week 2</title>
+	<script type='text/javascript' src='colorpicker.js' ></script>
+	<script type='text/javascript' src='initShaders.js'> </script>
+	<script type='text/javascript' src='MV.js'> </script>
+	<script type='text/javascript' src='webgl-utils.js'> </script>
+	<script type='text/javascript' src='ex_04.js'> </script>
+	<style type="text/css">
+		#picker { width: 200px; height: 200px }
+		#slider { width: 30px; height: 200px }
+	</style>
+	<script id="vertex-shader" type="x-shader/x-vertex">
+		attribute vec4 vPosition;
+		attribute vec4 vColor;
+		varying vec4 fColor;
+		
+		void
+		main()
+		{
+			gl_PointSize = 10.0;
+			gl_Position = vPosition;
+			fColor = vColor;
+		}
+	</script>
+
+	<script id="fragment-shader" type="x-shader/x-fragment">
+		precision mediump float;
+		varying vec4 fColor;
+
+		void
+		main()
+		{
+			gl_FragColor = fColor;
+		}
+	</script>
+</head>
+<body>
+<table style="width:512px">
+  <tr>
+    <th><button id="pointButton" onclick="selectMode(0) " >Normal mode (draw points)</button></th>
+		<th><button id="triButton" onclick="selectMode(1)" >Interactive mode (draw triangles)</button></th> 
+		<th><button id="triButton" onclick="selectMode(2)" >Draw circles</button></th> 
+  </tr>
+</table>
+
+
+	<canvas id="glCanvas" width="512" height="512"></canvas>
+	<button id="clearButton" onclick="clearCanvas()" >clear</button>
+	<div id="colors" style="display: flex;">
+		<div id="picker"></div>
+		<div id="slider"></div>
+		<div id="color" style="width: 50px; height: 50px; border: 1px solid black;"></div>
+	</div>
+	<script type="text/javascript">
+
+		ColorPicker(
+
+			document.getElementById('slider'),
+			document.getElementById('picker'),
+
+			function(hex, hsv, rgb) {
+                    // [0-255], [0-255], [0-255]
+              chosenColor = vec4(rgb.r/255,rgb.g/255,rgb.b/255,1.0);
+
+                      // #HEX
+                      document.getElementById('color').style.backgroundColor = hex;
+
+                  });
+      </script>
+
+</body>
+</html>
