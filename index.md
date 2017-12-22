@@ -36,7 +36,7 @@ Student number: s172393
 
 * [Part 2](http://htmlpreview.github.io/?https://github.com/dianatofan/Computer-Graphics/blob/master/Week%203/Part%202/index.html) - Draw the unit cube in different classical perspective views
 
-**Worksheet 4: Local illumination – Gouraud and Phong shading** - [Source code]https://github.com/dianatofan/Computer-Graphics/tree/master/Week%204)
+**Worksheet 4: Local illumination – Gouraud and Phong shading** - [Source code](https://github.com/dianatofan/Computer-Graphics/tree/master/Week%204)
 
 * [Part 1](http://htmlpreview.github.io/?https://github.com/dianatofan/Computer-Graphics/blob/master/Week%204/Part%201/index.html) - Draw a sphere in perspective view.
 
