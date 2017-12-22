@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Worksheet 3 Part 4</title>
+	<script type='text/javascript' src='initShaders.js'> </script>
+	<script type='text/javascript' src='MV.js'> </script>
+	<script type='text/javascript' src='webgl-utils.js'> </script>
+	<script type='text/javascript' src='part4.js'> </script>
+	<script id="vertex-shader" type="x-shader/x-vertex">
+		attribute vec4 vPosition;
+		varying vec4 fColor;
+		attribute vec4 vNormal;
+
+		uniform mat4 modelViewMatrix;
+		uniform mat4 projectionMatrix;
+
+		uniform float Ka, Kd, Ks, lightEmission, alpha;
+
+		void main() {
+			
+				gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+
+				vec4 light = vec4(0.0, 0.0, 1.0, 0.0); 
+
+				vec3 pos = -(modelViewMatrix * vPosition).xyz;
+
+				vec3 L = normalize((modelViewMatrix * light).xyz); 
+				vec3 N = normalize((modelViewMatrix * vNormal).xyz);
+				vec3 E = -normalize(pos);
+				vec3 H = normalize( L + E );
+
+				// compute lambertian shading coeffecient
+				float lambertian = max(dot(L, N), 0.0);
+
+				// compute specular shading component
+				float specular = pow(max(dot(N, H), 0.0), alpha);
+
+				// compute each component of the phong reflection model
+				vec4 diffuse_reflectance = vec4((Kd * lambertian * vec3(lightEmission)), 1.0);
+				vec4 specular_reflectance = vec4((Ks * specular * vec3(lightEmission)), 1.0);
+
+				if(dot(L, N) < 0.0) 
+					specular_reflectance = vec4(0.0, 0.0, 0.0, 1.0);
+
+				vec4 ambient_reflectance = vec4((Ka * vec3(lightEmission)), 1.0);
+
+				vec4 reflectance = ambient_reflectance + specular_reflectance + diffuse_reflectance;
+
+				fColor = reflectance;
+		}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+varying vec4 fColor;
+
+void main() {
+  gl_FragColor = fColor;//vec4(1.0, 1.0, 1.0, 1.0); // color white
+}
+	</script>
+
+	<script id="fragment-shader" type="x-shader/x-fragment">
+		precision mediump float;
+		varying vec4 fColor;
+
+		void main(){
+			gl_FragColor = fColor;
+		}
+	</script>
+</head>
+<body>
+<canvas id="glCanvas" width="512" height="512"></canvas>
+<div>
+	<button id="incrementButton" onclick="increment()">Increment</button>
+	<button id="decrementButton" onclick="decrement()">Decrement</button>
+</div>
+<br /> <br />
+<div>
+	Ambient reflection coefficient (Ka): 0.0 <input id="ambient" type="range"
+	 min= "0.0" max= "1.0" step = "0.1" value = "0.1" />
+	 1.0
+	 <span id="ambientLabel"></span>
+	</div>
+	
+	<div>
+	Diffuse reflection coefficient (Kd): 0.0 <input id="diffuse" type="range"
+	 min= "0.0" max= "1.0" step = "0.1" value = "0.4" />
+	 1.0
+	 <span id="diffuseLabel"></span>
+	</div>
+	
+	<div>
+	Specular reflection coefficient (Ks): 0.0 <input id="specular" type="range"
+	 min= "0.0" max= "1.0" step = "0.1" value = "0.6" />
+	 1.0
+	 <span id="specularLabel"></span>
+	</div>
+	
+	<div>
+	Alpha/shininess: 0.0 <input id="alpha" type="range"
+	 min= "0.0" max= "100.0" step = "1.0" value = "44.0" />
+	 100
+	 <span id="alphaLabel"></span>
+	</div>
+	
+	<div>
+	Light emission/intensity: 0.0 <input id="emission" type="range"
+	 min= "0.0" max= "1.0" step = "0.1" value = "0.7" />
+	 1.0
+	 <span id="emissionLabel"></span>
+	</div>
+</body>
+</html>

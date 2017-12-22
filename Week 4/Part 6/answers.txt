@@ -1,0 +1,37 @@
+a) What is the difference between Phong shading and Phong lighting (the Phong reflection model)?
+  Phong lighting describes how light should be reflected on a surface, based on the surface material and the light. 
+  It is also called Phong reflection model.
+  Phong shading is an implementation of the Phong reflection model.
+
+b) What is the difference between flat shading, Gouraud shading, and Phong shading? List pros and cons of each.
+  1. Flat shading is the simplest shading model. With flat shading, a polygon is drawn with only one color. 
+    To do the shading, we need to know the normal of the polygon.
+    Pros: cheap and effective, frequently used for protyping and testing, no interpolation needed
+    Cons: unrealistic results (edges are visible)
+
+  2. Gouraud shading, also known as "color interpolation shading", is more realistic than flat shading. 
+    To do the shading, we need to know the normal at each of the vertices of the polygon.
+    Pros: more expensive than flat shading but still affordable, edges aren't so noticeable 
+    Cons: may look unnatural since it doesn't handle specular highlights
+
+  3. Phong shading, also known as "normal vector interpolation shading" produces the best results.
+    Pros: handles specular highlights & combines diffuse, ambient, and specular lighting for each point that it draws
+    Cons: computationally expensive
+
+
+c) What is the difference between a directional light and a point light?
+  Point light emits light in all directions. Objects closer to the light will be brighter, and objects further away will be darker.
+  A directional light mimics the light that we would get from the sun. It emits parallel light rays in a single direction, but the light reaches out into infinity. Perfect for illuminating large open spaces.
+
+d) Does the eye position influence the shading of an object in any way?
+  Yes, especially when it comes to specular highlights.
+
+e) What is the effect of setting the specular term to (0, 0, 0)?
+  There will be no specular highlights.
+
+f) What is the effect of increasing the shininess exponent?
+  The specular highlight will be brighter and more "intense" at the center.
+
+g) In what coordinate space did you compute the lighting?
+  Gouraud shading - world space
+  Phong shading - eye space

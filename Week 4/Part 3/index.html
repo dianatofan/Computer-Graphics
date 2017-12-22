@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Worksheet 3 Part 3</title>
+	<script type='text/javascript' src='initShaders.js'> </script>
+	<script type='text/javascript' src='MV.js'> </script>
+	<script type='text/javascript' src='webgl-utils.js'> </script>
+	<script type='text/javascript' src='part3.js'> </script>
+	<script id="vertex-shader" type="x-shader/x-vertex">
+		precision mediump float;
+
+		attribute vec4 vPosition;
+		attribute vec4 vNormal;
+
+		varying vec4 fColor;
+
+		uniform vec4 diffuseProduct;
+		uniform vec4 lightPosition;
+		uniform mat4 modelViewMatrix;
+		uniform mat4 projectionMatrix;
+
+		void main() {    
+			vec3 pos = (modelViewMatrix * vPosition).xyz;
+			vec3 L;
+
+			// check for directional light
+			if (lightPosition.w == 0.0) 
+				L = normalize(lightPosition.xyz);
+			else 
+				L = normalize(lightPosition.xyz - pos);
+
+			// use normalized position otherwise lightsource rotating with camera
+			vec3 N = normalize(vec4(vNormal.xyz, 0).xyz);
+
+			float Kd = max( dot(L, N), 0.0 ); // illumination equation
+			vec4 diffuse = Kd * diffuseProduct;
+
+			gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+			fColor = diffuse;
+			fColor.a = 1.0;
+		}
+	</script>
+
+	<script id="fragment-shader" type="x-shader/x-fragment">
+		precision mediump float;
+		varying vec4 fColor;
+
+		void main(){
+			gl_FragColor = fColor;
+		}
+	</script>
+</head>
+<body>
+<canvas id="glCanvas" width="512" height="512"></canvas>
+<button id="incrementButton" onclick="increment()">Increment</button>
+<button id="decrementButton" onclick="decrement()">Decrement</button>
+</body>
+</html>

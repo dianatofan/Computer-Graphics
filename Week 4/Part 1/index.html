@@ -9,11 +9,10 @@
 	<script id="vertex-shader" type="x-shader/x-vertex">
 		attribute vec4 vPosition;
 		uniform mat4 modelViewMatrix;
+		uniform mat4 projectionMatrix;
 
-		void
-		main()
-		{
-			gl_Position = modelViewMatrix * vPosition;
+		void main() {
+			gl_Position = projectionMatrix * modelViewMatrix * vPosition;
 			gl_PointSize = 2.0;
 		}
 	</script>
@@ -21,10 +20,8 @@
 	<script id="fragment-shader" type="x-shader/x-fragment">
 		precision mediump float;
 
-		void
-		main()
-		{
-				gl_FragColor = vec4( 0.0, 0.0, 0.0, 1.0 );
+		void main() {
+				gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 		}
 	</script>
 </head>
