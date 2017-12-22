@@ -12,6 +12,8 @@ Student number: s172393
 
 **Worksheet 1: Getting started with WebGL**
 
+[I'm a relative reference to a repository file](../master/week1part1.html)
+
 **Worksheet 2: Input devices and interaction**
 
 **Worksheet 3: Projections (virtual camera) and transformations**
