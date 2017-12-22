@@ -34,7 +34,7 @@ Student number: s172393
 
 * [Part 1](http://htmlpreview.github.io/?https://github.com/dianatofan/Computer-Graphics/blob/master/Week%203/Part%201/index.html) - Draw a wireframe unit cube in isometric view.
 
-* [Part 2](http://htmlpreview.github.io/?https://github.com/dianatofan/Computer-Graphics/blob/master/Week%203/Part%202/index.html) - Draw the unit cube in different classical perspective views
+* [Part 2](http://htmlpreview.github.io/?https://github.com/dianatofan/Computer-Graphics/blob/master/Week%203/Part%202/index.html) - Draw the unit cube in different classical perspective views.
 
 **Worksheet 4: Local illumination – Gouraud and Phong shading** - [Source code](https://github.com/dianatofan/Computer-Graphics/tree/master/Week%204)
 
@@ -49,7 +49,7 @@ Student number: s172393
 * [Part 5](http://htmlpreview.github.io/?https://github.com/dianatofan/Computer-Graphics/blob/master/Week%204/Part%205/index.html) - Use Phong shading by moving your implementation of the Phong reflection
 model to the fragment shader and varying positions and normals across triangles instead of colors.
 
-* [Part 6](https://github.com/dianatofan/Computer-Graphics/blob/master/Week%201/Part%206/answers.txt) - Answers to the questions
+* [Part 6](https://github.com/dianatofan/Computer-Graphics/blob/master/Week%204/Part%206/answers.txt) - Answers to the questions.
 
 **Worksheet 5: Rendering a triangle mesh** - [Source code](https://github.com/dianatofan/Computer-Graphics/tree/master/Week%205)
 
