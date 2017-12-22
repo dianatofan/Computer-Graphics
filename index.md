@@ -68,4 +68,4 @@ different texture wrapping modes (repeat or clamp-to-edge) and different texture
 
 ### Project
 
-[Here] you can find the report, source code and executable application for the final project.
+[Here](https://github.com/dianatofan/Computer-Graphics/tree/master/Final%20project) you can find the report, source code and executable application for the final project.
