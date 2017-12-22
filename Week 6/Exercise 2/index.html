@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Worksheet 6 Part 2</title>
+	<script type='text/javascript' src='initShaders.js'> </script>
+	<script type='text/javascript' src='MV.js'> </script>
+	<script type='text/javascript' src='webgl-utils.js'> </script>
+	<script type='text/javascript' src='part2.js'> </script>
+	<script id="vertex-shader" type="x-shader/x-vertex">
+		attribute vec4 vPosition;
+		attribute vec4 vColor;
+		attribute vec2 vTexCoord;
+		uniform mat4 projectionMatrix;
+		varying vec4 fColor;
+		varying vec2 fTexCoord;
+		
+		void main() {
+			fColor = vColor;
+			gl_Position = projectionMatrix * vPosition;
+			fTexCoord = vTexCoord;
+		}
+	</script>
+
+	<script id="fragment-shader" type="x-shader/x-fragment">
+		precision mediump float;
+		varying vec4 fColor;
+		varying vec2 fTexCoord;
+		uniform sampler2D texMap;
+		
+		void main() {
+			gl_FragColor = fColor * texture2D(texMap, fTexCoord);
+		}
+	</script>
+</head>
+<body style="font-family: 'Verdana'; font-size: 14px;">
+<canvas id="glCanvas" width="512" height="512"></canvas>
+<div>
+	<div style="margin:15px 0">
+		<div>Texture wrapping modes</div>
+		<div>
+		<input type="radio" id="repeatTexture"
+			name="texture" value="repeat">
+		<label for="filtering">Repeat</label>
+		<input type="radio" id="clampToEdgeTexture"
+			name="texture" value="clampToEdge">
+		<label for="filtering">Clamp-to-edge</label>
+		</div>
+	</div>
+
+	<div>
+		<div>Texture filtering modes</div>
+		<div>
+			<input type="radio" id="nearestFiltering"
+				name="texture" value="nearest">
+			<label for="nearestFiltering">Nearest</label>
+			<input type="radio" id="linearFiltering"
+				name="texture" value="linear">
+			<label for="linearFiltering">Linear</label>
+			<input type="radio" id="mipmapFiltering"
+			name="texture" value="mipmap">
+			<label for="mipmapFiltering">Mipmap</label>
+		</div>
+		</div>
+</div>
+</body>
+</html>
