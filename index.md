@@ -5,6 +5,7 @@ This website contains the weekly exercises and final project for the course **02
 During the semester I worked in a team with 2 other members on the weekly exercises, but I did the final project individually.
 
 Student name: Diana Tofan
+
 Student number: s172393
 
 ### Exercises
