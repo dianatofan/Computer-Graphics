@@ -1,4 +1,4 @@
-## Computer Graphics 
+### Overview
 
 This website contains the weekly exercises and final project for the course **02561 Computer Graphics**. 
 
