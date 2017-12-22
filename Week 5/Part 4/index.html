@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>Worksheet 5 Part 4</title>
+</head>
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+attribute vec4 vNormal;
+
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+
+varying vec3 N, L, E;
+
+void main() {
+    gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+    vec4 light = vec4(0.0, 0.0, 1.0, 0.0); 
+    vec3 pos = -(modelViewMatrix * vPosition).xyz;
+
+    L = normalize((modelViewMatrix * light).xyz); 
+    N = normalize((modelViewMatrix * vec4(vNormal.xyz,0.0)).xyz);
+    E = normalize(pos);
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+varying vec3 N, L, E;
+
+void main() {
+
+    float Ka, Ks, lightEmission, alpha;
+    Ka = 0.1;
+    vec3 Kd = vec3(0.5, 0.5, 0.0); // diffuse reflectance, used to color teapot
+    Ks = 0.9;
+    lightEmission = 1.0;
+    alpha = 100.0;
+
+    vec3 H = normalize( L + normalize(E) );
+
+    float lambertian = max(dot(L, normalize(N)), 0.0);
+    float specular = pow(max(dot(normalize(N),H),0.0),alpha);
+    vec4 diffuse_reflectance = vec4((Kd*lambertian*vec3(lightEmission)),1.0);
+    vec4 specular_reflectance = vec4((Ks*specular*vec3(lightEmission)),1.0);
+     if(dot(L,N) < 0.0) 
+        specular_reflectance = vec4(0.0,0.0,0.0,1.0);
+
+    vec4 ambient_reflectance = vec4((Ka*vec3(lightEmission)),1.0);
+
+    vec4 reflectance = ambient_reflectance + specular_reflectance + diffuse_reflectance;
+
+  gl_FragColor = reflectance;
+}
+</script>
+
+<script type="text/javascript" src="webgl-utils.js"></script>
+<script type="text/javascript" src="initShaders.js"></script>
+<script type="text/javascript" src="MV.js"></script>
+<script type="text/javascript" src="OBJParser.js"></script>
+<script type="text/javascript" src="part4.js"></script>
+<body>
+
+<canvas id="gl-canvas" width="500" height="500">
+  <!-- The following message is displayed if the browser doesn’t support HTML5 -->
+  Sorry; your web browser does not support HTML5’s canvas element.
+</canvas>
+</body>
+</html>

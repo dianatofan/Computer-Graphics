@@ -121,6 +121,29 @@ window.onload = function init() {
     render();
 };
 
+document.getElementById("clampToEdgeTexture").onclick = function(){ // Clamp to edge
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  render();
+};
+
+document.getElementById("nearestFiltering").onclick = function(){ // Nearest
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  render();
+};
+
+document.getElementById("linearFiltering").onclick = function(){ // Linear
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  render();
+};
+
+document.getElementById("mipmapFiltering").onclick = function(){ // Mipmap
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST_MIPMAP_NEAREST);
+  render();
+};
+
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.uniformMatrix4fv(pmLoc, false, flatten(projectionMatrix)); 
